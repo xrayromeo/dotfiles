@@ -1,5 +1,5 @@
 " Author : X. Rave
-" Date   : 03/10/2020
+" Date   : 25/01/2021
 " Object : vim configuration file
 " vim: expandtab
 
@@ -236,6 +236,7 @@ let g:airline_section_z = airline#section#create(['%3p%% %l:%v'])
 
 " Vim Cheat40
 "------------
+" A cheat sheet for Vim
 " git clone --depth=1 https://github.com/lifepillar/vim-cheat40
 " use <leader>? to open cheat
 packadd vim-cheat40
@@ -251,19 +252,29 @@ packadd vim-mundo
 
 " Vim Repeat
 "-----------
+" Extends vim's . key
 " git clone --depth=1 https://github.com/tpope/vim-repeat
 packadd vim-repeat
 
 
 " Vim Matchup
 "------------
-" extends vim's % key
+" Extends vim's % key
 " git clone --depth=1 https://github.com/andymass/vim-matchup
 packadd vim-matchup
 
 
+" Vim Exchange
+"-------------
+" Easy text exchange operator for Vim
+" git clone --depth=1 https://github.com/tommcdo/vim-exchange
+" use cx{motion} cx{motion}
+packadd vim-exchange
+
+
 " Vim Swap
 "---------
+" A Vim text editor plugin to swap delimited items
 " git clone --depth=1 https://github.com/machakann/vim-swap
 " g< ou g> ou gs
 " h/l to swap items, j/k to choose item, g/G to group/ungroup items, s/S to sort, r to reverse
@@ -288,13 +299,14 @@ packadd unicode.vim
 
 " FZF Vim
 "--------
-" fzf is a general-purpose fuzzy finder, need fzf 0.22.0 or above
+" Fzf is a general-purpose fuzzy finder, need fzf 0.22.0 or above
 " git clone --depth=1 https://github.com/junegunn/fzf.vim
 packadd fzf.vim
 
 
 " Fern Vim
 "---------
+" Asynchronous tree viewer
 " git clone --depth=1 https://github.com/lambdalisue/fern.vim
 " :Fern . -drawer and use h,j,k,l to navigate
 let g:fern#mark_symbol                       = '●'
@@ -310,14 +322,16 @@ packadd fern.vim
 
 " NerdCommenter
 "--------------
+" Comment functions
 " git clone --depth=1 https://github.com/preservim/nerdcommenter
-" use <leader>cc to comment, <leader>cu to uncomment
+" use <leader>cc to comment, <leader>cu to uncomment, <leader>cy to yank
 let g:NERDAltDelims_c = 1
 packadd nerdcommenter
 
 
 " Vim Easy Align
 "---------------
+" A simple, easy-to-use Vim alignment plugin
 " git clone --depth=1 https://github.com/junegunn/vim-easy-align
 " exemples : vipga= or gaip= or :EasyAlign or gaip*|
 packadd vim-easy-align
@@ -327,6 +341,7 @@ nmap <leader>a <Plug>(EasyAlign)
 
 " Tagbar
 "-------
+" A class outline viewer for Vim
 " git clone --depth=1 https://github.com/majutsushi/tagbar
 " need universal-ctags
 let g:tagbar_left = 1
@@ -345,6 +360,7 @@ inoremap <F2> <ESC>:TagbarToggle<CR>
 "------
 " View and search LSP symbols, tags in Vim
 " git clone --depth=1 https://github.com/liuchengxu/vista.vim
+" use :Vista
 let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
 let g:vista#renderer#icons = {"function":"●", "variable":"●", "command":"●"}
 packadd vista.vim
@@ -352,6 +368,8 @@ packadd vista.vim
 
 " Vim Rooter
 "-----------
+" Rooter changes the working directory to the project root
+" when you open a file or directory
 " git clone --depth=1 https://github.com/airblade/vim-rooter
 " see also option autochdir
 let g:rooter_targets = '*.c,*.h'
@@ -398,7 +416,7 @@ autocmd User Startified setlocal cursorline
 let g:startify_fortune_use_unicode = 1
 let g:startify_files_number = 10
 let g:startify_session_autoload = 1
-let g:startify_bookmarks = [ '~/Developpement/Cnes/CO3D/dataref-water-master/deprecated/ALCD' ]
+let g:startify_bookmarks = [ '~/.vim' ]
 let g:startify_commands =  [  ['Load Vimspector', ':packadd vimspector'] ]
 packadd vim-startify
 
@@ -465,8 +483,8 @@ packadd jedi-vim
 "----------
 " You can type text in a file, send it to a live REPL
 " git clone https://github.com/jpalardy/vim-slime.git
-" Use :SlimeConfig to choose and start REPL
-" Use C-c C-c to send paragraph to REPL interpreter
+" use :SlimeConfig to choose and start REPL
+" use C-c C-c to send paragraph to REPL interpreter
 let g:slime_target = "vimterminal"
 let g:slime_no_mappings = 1
 let g:slime_python_ipython = 1
