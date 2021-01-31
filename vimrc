@@ -1,5 +1,5 @@
 " Author : X. Rave
-" Date   : 25/01/2021
+" Date   : 31/01/2021
 " Object : vim configuration file
 " vim: expandtab
 
@@ -221,6 +221,7 @@ colorscheme embark
 
 " Vim Airline
 "------------
+" Lean & mean status/tabline for vim that's light as air
 " git clone --depth=1 https://github.com/vim-airline/vim-airline
 " git clone --depth=1 https://github.com/vim-airline/vim-airline-themes
 let g:airline_powerline_fonts = 0
@@ -268,7 +269,7 @@ packadd vim-matchup
 "-------------
 " Easy text exchange operator for Vim
 " git clone --depth=1 https://github.com/tommcdo/vim-exchange
-" use cx{motion} cx{motion}
+" use cx{motion/object} cx{motion/object}
 packadd vim-exchange
 
 
@@ -284,6 +285,16 @@ let g:swap#rules += [{
     \   "delimiter": [':'],
     \   "body": '\w\+\(:\w\+\)\+',
     \   }]
+
+
+" Vim Sandwich
+"-------------
+" Add/delete/replace surroundings of a sandwiched textobject
+" git clone --depth=1 https://github.com/machakann/vim-sandwich
+" sa{motion/object}{addition} to add
+" sdb or sd{deletion} to delete
+" sr{motion/object}{deletion}{addition} or srb{addition} to replace
+packadd vim-sandwich
 
 
 " Unicode Vim
@@ -417,8 +428,21 @@ let g:startify_fortune_use_unicode = 1
 let g:startify_files_number = 10
 let g:startify_session_autoload = 1
 let g:startify_bookmarks = [ '~/.vim' ]
-let g:startify_commands =  [  ['Load Vimspector', ':packadd vimspector'] ]
+let g:startify_commands =  [ 
+\ ['Load Vimspector', ':packadd vimspector'],
+\ ]
 packadd vim-startify
+
+
+" MiniSnip
+"---------
+" Lightweight and minimal snippet plugin written in Vim Script
+" git clone --depth=1 https://github.com/Jorengarenar/miniSnip
+" use tab in insert mode to expand snippet
+" :Minisnip <name> to edit snippet
+" g:miniSnip_vert option doesn't work :
+"   changed vnew by new in miniSnip#edit function of miniSnip.vim
+packadd miniSnip
 
 
 " ALE
@@ -433,7 +457,8 @@ packadd vim-startify
 " Warning: disable jedi completion if you use ale completion
 "let g:ale_linters_explicit = 1 " use on listed linters
 "let g:ale_linters = {'python': ['pyls']}
-let g:ale_completion_enabled=0 " must be before packadd ale
+let g:ale_completion_enabled = 0 " must be before packadd ale
+let g:ale_completion_autoimport = 0
 let g:ale_set_balloons = 1 " must be before packadd ale
 let g:ale_set_loclist = 1
 let g:ale_set_quickfix = 0
@@ -452,32 +477,6 @@ let g:ale_python_pyls_config = {
 \}
 packadd ale
 
-"highlight SignColumn guibg=DarkGray
-
-
-" Vim Jedi
-"---------
-" Awesome Python autocompletion with VIM
-" git clone --depth=1 --recursive https://github.com/davidhalter/jedi-vim
-" Warning: disable ale completion if you use jedi completion
-let g:jedi#completions_command = "<C-Space>"
-let g:jedi#auto_initialization = 1
-let g:jedi#auto_vim_configuration = 1
-"let g:jedi#use_splits_not_buffers = "top"
-let g:jedi#popup_on_dot = 0
-let g:jedi#popup_select_first = 1
-let g:jedi#show_call_signatures = 2
-let g:jedi#show_call_signatures_delay = 0
-"let g:jedi#goto_command = "<leader>jd"
-"let g:jedi#goto_assignments_command = "<leader>jg"
-"let g:jedi#goto_stubs_command = "<leader>js"
-"let g:jedi#goto_definitions_command = ""
-let g:jedi#documentation_command = "K"
-let g:jedi#max_doc_height = 30
-"let g:jedi#usages_command = "<leader>jn"
-let g:jedi#rename_command = "<leader>jr"
-packadd jedi-vim
-
 
 " Vim Slime
 "----------
@@ -495,10 +494,33 @@ xmap <c-c><c-c> <Plug>SlimeRegionSend
 nmap <c-c><c-c> <Plug>SlimeParagraphSend
 
 
-"
+" Vim Jedi
+"---------
+" Awesome Python autocompletion with VIM
+" git clone --depth=1 --recursive https://github.com/davidhalter/jedi-vim
+" Warning: disable ale completion if you use jedi completion
+let g:jedi#completions_command = "<C-Space>"
+let g:jedi#auto_initialization = 1
+let g:jedi#auto_vim_configuration = 1
+let g:jedi#use_splits_not_buffers = "top"
+let g:jedi#popup_on_dot = 0
+let g:jedi#popup_select_first = 0
+let g:jedi#show_call_signatures = 2
+let g:jedi#show_call_signatures_delay = 0
+let g:jedi#goto_command = "<leader>jd"
+let g:jedi#goto_assignments_command = "<leader>jg"
+let g:jedi#goto_stubs_command = "<leader>js"
+let g:jedi#goto_definitions_command = ""
+let g:jedi#documentation_command = "K"
+let g:jedi#max_doc_height = 30
+let g:jedi#usages_command = "<leader>jn"
+let g:jedi#rename_command = "<leader>jr"
+packadd jedi-vim
+
+
 " Vimspector
 "-----------
-" Python and C/C++ debugger
+" Python and C/C++ debugger, newer versions need vim 8.2
 " git clone --depth=1 https://github.com/puremourning/vimspector
 " cd ~/.vim/pack/mypackages/opt/vimspector
 " ./install_gadget.py --enable-python --enable-c" => install debugpy and vscode-cpptools
@@ -507,5 +529,5 @@ nmap <c-c><c-c> <Plug>SlimeParagraphSend
 " To run vimspector :
 " :call vimspector#Launch()
 " :set mouse=a
-"let g:vimspector_enable_mappings = 'HUMAN'
+let g:vimspector_enable_mappings = 'HUMAN'
 "packadd vimspector
