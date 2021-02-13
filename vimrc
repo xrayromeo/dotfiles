@@ -3,6 +3,15 @@
 " Object : vim configuration file
 " vim: expandtab
 
+
+"------------
+" VIM VERSION
+"------------
+if v:version < 800
+    finish
+endif
+
+
 "----------------
 " COMMON SETTINGS
 "----------------
@@ -101,7 +110,7 @@ autocmd FileType cmake setlocal expandtab
 
 " Python settings
 "----------------
-autocmd FileType python setlocal textwidth=79 expandtab
+autocmd FileType python setlocal expandtab
 
 " C,C++ settings
 "---------------
@@ -191,7 +200,13 @@ inoremap <C-x><C-t> <C-x><C-]>
 "-------------------
 " Shortkeys settings
 "-------------------
-source $HOME/.vim/myshortkeys.vimrc
+source $HOME/.vim/myshortkeys.vim
+
+
+"-----------------------
+" Abbreviations settings
+"-----------------------
+source $HOME/.vim/myabbrevs.vim
 
 
 "---------------------------------------------------
@@ -315,6 +330,35 @@ packadd unicode.vim
 packadd fzf.vim
 
 
+" LeaderF
+"--------
+" Efficient fuzzy finder that helps to locate files, buffers, mrus, gtags, etc
+" git clone --depth=1 https://github.com/Yggdroot/LeaderF
+let g:Lf_ShortcutF = '<leader>ff'
+let g:Lf_ShortcutB = '<leader>fb'
+let g:Lf_ShowDevIcons = 0
+let g:Lf_PreviewCode = 1
+let g:Lf_PreviewInPopup = 1
+let g:Lf_PreviewResult = {
+    \ 'File': 0,
+    \ 'Buffer': 1,
+    \ 'Mru': 0,
+    \ 'Tag': 0,
+    \ 'BufTag': 1,
+    \ 'Function': 1,
+    \ 'Line': 1,
+    \ 'Colorscheme': 0,
+    \ 'Rg': 0,
+    \ 'Gtags': 0
+\}
+let g:Lf_WildIgnore = {
+    \ 'dir': ['.git'],
+    \ 'file': ['*.sw?', '~$*', '*.bak', '*.exe', '*.o', '*.so', '*.py[co]']
+\}
+let g:Lf_RootMarkers = ['.leaderf', '.git']
+packadd LeaderF
+
+
 " Fern Vim
 "---------
 " Asynchronous tree viewer
@@ -428,8 +472,8 @@ let g:startify_fortune_use_unicode = 1
 let g:startify_files_number = 10
 let g:startify_session_autoload = 1
 let g:startify_bookmarks = [ '~/.vim' ]
-let g:startify_commands =  [ 
-\ ['Load Vimspector', ':packadd vimspector'],
+let g:startify_commands =  [
+    \ ['Load Vimspector', ':packadd vimspector'],
 \ ]
 packadd vim-startify
 
@@ -443,6 +487,48 @@ packadd vim-startify
 " g:miniSnip_vert option doesn't work :
 "   changed vnew by new in miniSnip#edit function of miniSnip.vim
 packadd miniSnip
+
+
+" Vim Slime
+"----------
+" You can type text in a file, send it to a live REPL
+" git clone https://github.com/jpalardy/vim-slime.git
+" use :SlimeConfig to choose and start REPL
+" use C-c C-c to send paragraph to REPL interpreter
+let g:slime_target = "vimterminal"
+let g:slime_no_mappings = 1
+let g:slime_python_ipython = 1
+let g:slime_vimterminal_config = {"term_finish": "close"}
+"let g:slime_vimterminal_cmd = "python3"
+packadd vim-slime
+xmap <c-c><c-c> <Plug>SlimeRegionSend
+nmap <c-c><c-c> <Plug>SlimeParagraphSend
+
+
+" Vim Lsc
+"--------
+" Vim Language Server Client
+" git clone --depth=1 https://github.com/natebosch/vim-lsc
+let g:lsc_enable_autocomplete = v:false
+let g:lsc_enable_diagnostics = v:false
+let g:lsc_server_commands = {'python': 'pyls'}
+let g:lsc_auto_map = {
+    \ 'GoToDefinition': '<leader>ld',
+    \ 'GoToDefinitionSplit': '<c-w><leader>ld',
+    \ 'FindReferences': '<leader>lr',
+    "\ 'NextReference': '<leader>ln',
+    "\ 'PreviousReference': '<leader>lp',
+    \ 'FindImplementations': '<leader>li',
+    \ 'DocumentSymbol': '<leader>ls',
+    \ 'WorkspaceSymbol': '<leader>lS',
+    \ 'FindCodeActions': '<leader>la',
+    \ 'Rename': '<leader>lR',
+    \ 'SignatureHelp': '<leader>lh',
+    \ 'ShowHover': v:true,
+    \ 'Completion': 'completefunc',
+    "\ 'Completion': 'omnifunc',
+\ }
+"packadd vim-lsc
 
 
 " ALE
@@ -478,26 +564,11 @@ let g:ale_python_pyls_config = {
 packadd ale
 
 
-" Vim Slime
-"----------
-" You can type text in a file, send it to a live REPL
-" git clone https://github.com/jpalardy/vim-slime.git
-" use :SlimeConfig to choose and start REPL
-" use C-c C-c to send paragraph to REPL interpreter
-let g:slime_target = "vimterminal"
-let g:slime_no_mappings = 1
-let g:slime_python_ipython = 1
-let g:slime_vimterminal_config = {"term_finish": "close"}
-"let g:slime_vimterminal_cmd = "python3"
-packadd vim-slime
-xmap <c-c><c-c> <Plug>SlimeRegionSend
-nmap <c-c><c-c> <Plug>SlimeParagraphSend
-
-
 " Vim Jedi
 "---------
 " Awesome Python autocompletion with VIM
 " git clone --depth=1 --recursive https://github.com/davidhalter/jedi-vim
+" use :Pyimport <module> to see module source code or documentation
 " Warning: disable ale completion if you use jedi completion
 let g:jedi#completions_command = "<C-Space>"
 let g:jedi#auto_initialization = 1
@@ -515,7 +586,7 @@ let g:jedi#documentation_command = "K"
 let g:jedi#max_doc_height = 30
 let g:jedi#usages_command = "<leader>jn"
 let g:jedi#rename_command = "<leader>jr"
-packadd jedi-vim
+"packadd jedi-vim
 
 
 " Vimspector
