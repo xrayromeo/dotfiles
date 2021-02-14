@@ -583,10 +583,10 @@ let g:jedi#goto_assignments_command = "<leader>jg"
 let g:jedi#goto_stubs_command = "<leader>js"
 let g:jedi#goto_definitions_command = ""
 let g:jedi#documentation_command = "K"
-let g:jedi#max_doc_height = 30
+let g:jedi#max_doc_height = 40
 let g:jedi#usages_command = "<leader>jn"
 let g:jedi#rename_command = "<leader>jr"
-"packadd jedi-vim
+packadd jedi-vim
 
 
 " Vimspector
